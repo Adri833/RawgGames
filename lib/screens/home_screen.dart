@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:rawg_games_app/screens/game_detail_screen.dart';
 import 'dart:convert';
 
-import 'package:rawg_games_app/widgets/game_cards.dart';
+import 'package:rawg_games_app/widgets/game_card.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -25,11 +26,13 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() => isLoading = true);
 
     const apiKey = '3d2a238aa42f4bd4bc26602e0b5c8a0f';
-    final url = Uri.parse('https://api.rawg.io/api/games?search=$query&key=$apiKey');
+    final url = Uri.parse(
+      'https://api.rawg.io/api/games?search=$query&key=$apiKey',
+    );
 
     try {
       final response = await http.get(url);
-      if(response.statusCode == 200) {
+      if (response.statusCode == 200) {
         final data = json.decode(response.body);
         setState(() {
           games = data['results'];
@@ -42,8 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       }
     } catch (e) {
-      // ignore: avoid_print
-      print('Error: $e');
       setState(() {
         games = [];
         isLoading = false;
@@ -88,18 +89,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: GridView.builder(
                     itemCount: games.length,
                     padding: const EdgeInsets.all(8),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 12,
-                      crossAxisSpacing: 12,
-                      childAspectRatio: 0.7,
-                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 12,
+                          crossAxisSpacing: 12,
+                          childAspectRatio: 0.7,
+                        ),
                     itemBuilder: (context, index) {
                       final game = games[index];
                       return GameCard(
                         title: game['name'] ?? 'Sin nombre',
                         imageUrl: game['background_image'] ?? '',
                         releaseDate: game['released'] ?? 'Desconocido',
+                        onTap: () {
+                          final gameId = game['id'];
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => GameDetailScreen(gameId: gameId),
+                            ),
+                          );
+                        },
                       );
                     },
                   ),
