@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:rawg_games_app/screens/game_detail_screen.dart';
+import 'package:rawg_games_app/utils/date_utils.dart';
 import 'dart:convert';
 
 import 'package:rawg_games_app/widgets/game_card.dart';
@@ -55,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onSearchChanged(String query) {
     // Espera 500ms desde la última tecla antes de llamar a la API
     if (_debounce?.isActive ?? false) _debounce!.cancel();
-    _debounce = Timer(const Duration(milliseconds: 500), () {
+    _debounce = Timer(const Duration(milliseconds: 250), () {
       searchGames(query);
     });
   }
@@ -101,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return GameCard(
                         title: game['name'] ?? 'Sin nombre',
                         imageUrl: game['background_image'] ?? '',
-                        releaseDate: game['released'] ?? 'Desconocido',
+                        releaseDate: formatFecha(game['released']),
                         onTap: () {
                           final gameId = game['id'];
                           Navigator.push(

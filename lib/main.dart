@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:rawg_games_app/screens/home_screen.dart';
 import 'package:rawg_games_app/theme/app_colors.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('es_ES', null);
+  
   runApp(const MainApp());
 }
 
