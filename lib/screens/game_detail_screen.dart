@@ -7,6 +7,7 @@ import 'package:rawg_games_app/utils/date_utils.dart';
 import 'package:rawg_games_app/utils/translation_utils.dart';
 import 'package:rawg_games_app/widgets/achievements_list.dart';
 import 'package:rawg_games_app/services/achievement_service.dart';
+import 'package:rawg_games_app/widgets/expandableText.dart';
 
 
 class GameDetailScreen extends StatefulWidget {
@@ -117,7 +118,7 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                     const SizedBox(height: 16),
 
                     descripcionTraducida != null
-                        ? Text(descripcionTraducida!, style: AppTextStyles.body, textAlign: TextAlign.justify)
+                        ? Expandabletext(text: descripcionTraducida!, style: AppTextStyles.body)
                         : Row(
                           children: [
                             const SizedBox(
@@ -138,13 +139,13 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Image.asset('assets/images/ic_metacritic.png', width: 80, height: 80),                      
+                        Image.asset('assets/images/ic_metacritic.png', width: 70, height: 70),                      
 
                         const SizedBox(width: 8),
 
                         SizedBox(
-                          width: 75,
-                          height: 75,
+                          width: 65,
+                          height: 65,
 
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -155,7 +156,7 @@ class _GameDetailScreenState extends State<GameDetailScreen> {
                             alignment: Alignment.center,
                             child: Text(
                               metacriticScore?.toString() ?? 'No disponible',
-                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 40),
+                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 35),
                             ),
                           ),
                         ),
