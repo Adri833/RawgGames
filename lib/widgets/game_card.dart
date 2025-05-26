@@ -6,6 +6,7 @@ class GameCard extends StatelessWidget {
   final String title;
   final String imageUrl;
   final String releaseDate;
+  final List<String> platforms;
   final VoidCallback? onTap;
 
   const GameCard({
@@ -13,6 +14,7 @@ class GameCard extends StatelessWidget {
     required this.title,
     required this.imageUrl,
     required this.releaseDate,
+    required this.platforms,
     this.onTap,
   });
 
@@ -52,14 +54,39 @@ class GameCard extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
-              child: Text(
-                releaseDate,
-                style: AppTextStyles.subtitle,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: platforms
+                    .map((p) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: _platformIcon(p),
+                        ))
+                    .toList(),
               ),
             ),
           ],
         )
       ),
     );
+  }
+}
+
+Widget _platformIcon(String platform) {
+  final name = platform.toLowerCase();
+
+  if (name.contains('pc')) {
+    return Image.asset('assets/icons/pc.png', width: 30, height: 30);
+  } else if (name.contains('playstation')) {
+    return Image.asset('assets/icons/playstation.png', width: 30, height: 30);
+  } else if (name.contains('xbox')) {
+    return Image.asset('assets/icons/xbox.png', width: 30, height: 30);
+  } else if (name.contains('nintendo')) {
+    return Image.asset('assets/icons/nintendo.png', width: 30, height: 30);
+  } else if (name.contains('ios') || name.contains('mac')) {
+    return Image.asset('assets/icons/apple.png', width: 30, height: 30);
+  } else if (name.contains('android')) {
+    return Image.asset('assets/icons/android.png', width: 30, height: 30);
+  } else {
+    return Image.asset('assets/icons/default.png', width: 30, height: 30);
   }
 }
